@@ -3,6 +3,7 @@ import Header from './cmps/Header.jsx'
 import MainInfo from './cmps/MainInfo.jsx'
 import AddUser from './cmps/AddUser.jsx'
 import TasksAndPosts from './cmps/TasksAndPosts.jsx'
+import { makeId } from './services/utils.js'
 import './App.css'
 import { useState , useEffect } from 'react'
 import axios from 'axios'
@@ -33,6 +34,8 @@ function App() {
     setFilterBy(filterBy.toLowerCase())
     setUsers(allUsers.filter(user => user.name.toLowerCase().includes(filterBy) || user.email.toLowerCase().includes(filterBy)))
   },[filterBy])
+
+  useEffect(()=>{ setIsAddUser(false)  },[openTasksPosts])
   
   async function loadUsers(){
     try{
@@ -83,7 +86,83 @@ function App() {
     return !todos.some(todo=>!todo.completed)
   }
   
+function markAsCompleted(taskId,userId){
+
+
+  const Idx = users.findIndex(user=> user.id===userId)
+  const taskIdx = users[Idx].todos.findIndex(todo=> todo.id===taskId)
+  const updatedTodos = [...users[Idx].todos]
+  updatedTodos[taskIdx] = {
+    ...updatedTodos[taskIdx],
+    completed: true
+  }
+
+ 
+  const updatedUser = {
+    ...users[Idx],
+    todos: updatedTodos
+  }
+
+
+  if(selectedUser.id===userId) 
+    setSelectedUser(updatedUser)
+
+
+  const updatedUsers = [
+    ...users.slice(0, Idx),
+    updatedUser,
+    ...users.slice(Idx + 1)
+  ]
+  setUsers(updatedUsers)
+  }
+
+  function addPost(newPost){
+    const userIdx = users.findIndex(user => user.id === selectedUser.id)
+  if (userIdx === -1) return 
+
+  const updatedPosts = [...users[userIdx].posts, newPost]
+
+  const updatedUser = {
+    ...users[userIdx],
+    posts: updatedPosts
+  }
+
+  setSelectedUser(updatedUser)
+
+  const updatedUsers = [
+    ...users.slice(0, userIdx),
+    updatedUser,
+    ...users.slice(userIdx + 1)
+  ]
+
+  setUsers(updatedUsers)
+
+  }
+
+  function addTodo(newTodoTitle){
+    const userIdx = users.findIndex(user => user.id === selectedUser.id)
+    if (userIdx === -1) return 
+
+    const newTodo={title:newTodoTitle,userId:selectedUser.id,completed:false,id:makeId(3)}
   
+    const updatedTodos = [...users[userIdx].todos, newTodo]
+  
+    const updatedUser = {
+      ...users[userIdx],
+      todos: updatedTodos
+    }
+  
+    setSelectedUser(updatedUser)
+  
+    const updatedUsers = [
+      ...users.slice(0, userIdx),
+      updatedUser,
+      ...users.slice(userIdx + 1)
+    ]
+  
+    setUsers(updatedUsers)
+  }
+
 
 
 
@@ -93,7 +172,6 @@ function addUser(name,email)
     setUsers(prevUsers => [...prevUsers, newUser])
 }
 
-console.log(users)
 console.log(selectedUser)
 
 
@@ -101,11 +179,11 @@ console.log(selectedUser)
     <section className='app'>
       <section className='main-info'>
       <Header setIsAddUser={setIsAddUser} filterBy={filterBy} setFilterBy={setFilterBy}/>
-      <MainInfo users={users} updateUser={updateUser} deleteUser={deleteUser} setSelectedUser={setSelectedUser} setOpenTasksPosts={setOpenTasksPosts} />
+      <MainInfo users={users} updateUser={updateUser} deleteUser={deleteUser} setSelectedUser={setSelectedUser} setOpenTasksPosts={setOpenTasksPosts} selectedUser={selectedUser} />
       </section>
       <section className='right-side'>
       {isAddUser && <AddUser setIsAddUser={setIsAddUser} addUser={addUser}/>}
-      {openTasksPosts && <TasksAndPosts user={selectedUser}/>}
+      {openTasksPosts && <TasksAndPosts user={selectedUser} markAsCompleted={markAsCompleted} addPost={addPost} addTodo={addTodo}/>}
       </section>
     </section>
   )

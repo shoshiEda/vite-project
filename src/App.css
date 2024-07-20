@@ -16,6 +16,7 @@
 }
 
 .user-preview{
+  width:16rem;
   border: 2px solid rgb(55, 199, 55);
   margin-block-end: 1rem;
   padding-inline: 1rem;
@@ -92,4 +93,60 @@
   right: 50%;
   transform: translate(50%);
   top:30%;
+}
+
+.todos-and-posts{
+  border: 1.5px solid purple;
+  height:25rem;
+  overflow-y: auto;
+  margin-block: 1rem;
+  width: 40rem;
+}
+
+.tasks-title{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.3rem;
+}
+
+.todo, .post{
+  position: relative;
+  border: 1px solid purple;
+  margin: 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem;
+  
+}
+
+
+.todo button{
+  position: absolute;
+  align-self: flex-end;
+  height:2rem;
+  right: 0.3rem;
+  bottom: 0.3rem;
+}
+
+.tasks-add{
+  border: 1.5px solid purple;
+  height:25rem;
+  margin-block: 1rem;
+  text-align: center;
+}
+
+.task-add-around{
+  border: 1.5px solid purple;
+  width: 20rem;
+  margin-inline-start: 50%;
+  transform: translate(-50%);
+  margin-block-start: 20%;
+  transform: translate(-50%);
+  padding: 0.5rem;
+  background-color: lightgray;
+}
+
+.tasks-add button{
+  margin-block-start: 0.5rem;
 }

@@ -7,30 +7,44 @@ function UserPreview({ user ,updateUser,deleteUser,setSelectedUser,setOpenTasksP
 
     const [name, setName] = useState(user.name)
     const [email, setEmail] = useState(user.email)
-    const [isOrange,setIsOrange] = useState(false)
+    const [isMarked,setIsMarked] = useState(false)
 
     const[openAdress,setOpenAdress] = useState(false)
 
     const isDone = user.isDone?"":"todos-left"
+   
+
+    function toggleUserInfo(){
+        setIsMarked(!isMarked)
+        if(!isMarked){
+            setOpenTasksPosts(true)
+            setSelectedUser(user)
+        }
+        if(isMarked){
+            setOpenTasksPosts(false)
+            setSelectedUser({})
+        }
+        
+    }
+    
 
     
 
         
 
     return(
-        <section className={isDone +" user-preview"} style={{backgroundColor:isOrange?"orange":""}} onClick={()=>{setOpenTasksPosts(true);
-            setSelectedUser(user)}}>
+        <section className={isDone +" user-preview"} style={{backgroundColor:isMarked && (selectedUser.id===user.id)?"orange":""}} onClick={toggleUserInfo}>
             <p>id:{user.id}</p>
             name:<input type="text" value={name} onChange={(e)=>setName(e.target.value)}/>
             <br/>
             email:<input type="text" value={email} onChange={(e)=>setEmail(e.target.value)} />
             <br/>
             <div className={openAdress? 'main-btns-opened':'main-btns-closed'}>
-                <button className='grey-btn' onClick={()=>setOpenAdress(true)}>other data</button>
+                <button className='grey-btn' onClick={(e)=>{e.stopPropagation();setOpenAdress(true)}}>other data</button>
                 {openAdress && <><br/><UserAddress address={user.address} setOpenAdress={setOpenAdress}/></>}
                 <div className='btns'>
-                <button onClick={()=>updateUser(user.id,name,email)}>update</button>
-                <button onClick={()=>deleteUser(user.id)}>delete</button>
+                <button onClick={(e)=>{e.stopPropagation();updateUser(user.id,name,email)}}>update</button>
+                <button onClick={(e)=>{e.stopPropagation();deleteUser(user.id)}}>delete</button>
                 </div>
                 
             </div>
