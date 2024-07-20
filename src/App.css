@@ -1,0 +1,95 @@
+.app{
+  display: flex;
+}
+
+
+.main-info{
+  border: 1px solid grey;
+  border-radius: 2rem;
+  padding: 1rem;
+  margin: 1rem;
+  cursor: pointer;
+}
+
+.header{
+  margin-block-end: 1rem;
+}
+
+.user-preview{
+  border: 2px solid rgb(55, 199, 55);
+  margin-block-end: 1rem;
+  padding-inline: 1rem;
+}
+
+.todos-left{
+  border: 2px solid red;
+}
+
+.main-btns-closed {
+ margin-block: 0.5rem;
+ display: flex;
+}
+
+.main-btns-opened {
+  margin-block: 0.5rem;
+ }
+
+.btns{
+ text-align: end;
+}
+
+.grey-btn{
+  background-color: gray;
+}
+
+.grey-btn:hover{
+  background-color: rgb(187, 186, 186);
+}
+
+
+
+.adress{
+  cursor: pointer;
+  background-color: lightgrey;
+  border: 2px solid gray;
+  border-radius: 1rem;
+  padding: 1rem;
+  margin-block: 0.5rem;
+  text-align: end;
+}
+
+.address-input{
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+.add-section{
+  margin-block-start: 4rem;
+}
+
+.add-user{
+  border: 2px solid gray;
+  padding: 1rem;
+  margin-block-start: 0.5rem;
+}
+
+.add-user button, .add-user input{
+  margin-block-start: 0.5rem;
+}
+
+.add-user p{
+  font-size: 0.5rem;
+  color:red;
+  margin: 0;
+}
+
+.msg{
+  position: absolute;
+  background-color: rgb(97, 230, 97);
+  color:whitesmoke;
+  text-align: center;
+  padding: 1rem;
+  right: 50%;
+  transform: translate(50%);
+  top:30%;
+}
